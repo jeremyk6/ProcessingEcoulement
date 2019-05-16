@@ -30,7 +30,7 @@ class ProfilerPonts(QgsProcessingAlgorithm):
         distance = parameters['distance']
         
         # traitement
-        id = 0
+        pont = 0
         for pont_f in ponts.getFeatures():
             pont_g = pont_f.geometry().extendLine(extension,extension) # extension du pont pour assurer son intersection avec les berges
             l0 = []
@@ -48,10 +48,10 @@ class ProfilerPonts(QgsProcessingAlgorithm):
                 else:
                     feedback.reportError("Le pont %s n'intersecte pas avec les berges !" % pont_f.id(), True)
                     return {}
-            lines.append((QgsGeometry.fromPolylineXY(l0), [id, 'Profil']))
-            lines.append((QgsGeometry.fromPolylineXY(l1), [id, 'Pont']))
-            lines.append((QgsGeometry.fromPolylineXY(l2), [id, 'Profil']))
-            id += 1
+            lines.append((QgsGeometry.fromPolylineXY(l0), [0, pont, 'Profil']))
+            lines.append((QgsGeometry.fromPolylineXY(l1), [1, pont, 'Pont']))
+            lines.append((QgsGeometry.fromPolylineXY(l2), [2, pont, 'Profil']))
+            pont += 1
             
         feedback.setCurrentStep(1)
         if feedback.isCanceled():
@@ -60,6 +60,7 @@ class ProfilerPonts(QgsProcessingAlgorithm):
         # écriture des données en sortie
         fields = QgsFields()
         fields.append(QgsField("id", QVariant.Int))
+        fields.append(QgsField("pont", QVariant.Int))
         fields.append(QgsField("type", QVariant.String))
         writer = QgsVectorFileWriter(output, "System", fields, QgsWkbTypes.LineString, QgsCoordinateReferenceSystem(2154), "ESRI Shapefile")
         for line, attributes in lines:
