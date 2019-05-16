@@ -48,16 +48,21 @@ class ProfilsDepuisLignes(QgsProcessingAlgorithm):
         
         # écriture des données en sortie
         fields = lignes.fields()
+        fields.append(QgsField("ordre", QVariant.Int))
         fields.append(QgsField("elevation", QVariant.Double))
         writer = QgsVectorFileWriter(output, "System", fields, QgsWkbTypes.Point, QgsCoordinateReferenceSystem(2154), "ESRI Shapefile")
         for echantillons_g, attributes, elevations in profils:
+            ordre = 0
             for echantillon_g, elevation in zip(echantillons_g, elevations): 
                 f = QgsFeature()
                 f.setGeometry(echantillon_g)
-                echantillon_att = attributes
+                echantillon_att = attributes.copy()
+                echantillon_att.append(ordre)
                 echantillon_att.append(elevation)
                 f.setAttributes(echantillon_att)
+                feedback.pushInfo(str(f.attributes()))
                 writer.addFeature(f)
+                ordre += 1
             
         feedback.setCurrentStep(2)
         
