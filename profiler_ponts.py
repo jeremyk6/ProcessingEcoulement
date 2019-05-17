@@ -43,9 +43,13 @@ class ProfilerPonts(QgsProcessingAlgorithm):
                     point_g = berge_g.intersection(pont_g)
                     line_distance = berge_g.lineLocatePoint(point_g)
                     p1, p2 = berge_g.interpolate(line_distance+distance), berge_g.interpolate(line_distance-distance)
-                    l0.append(p1.asPoint())
                     l1.append(point_g.asPoint())
-                    l2.append(p2.asPoint())
+                    if(bcount == 1 and (QgsGeometry.fromPolylineXY([l0[0], p1.asPoint()]).length() > QgsGeometry.fromPolylineXY([l0[0], p2.asPoint()]).length())):
+                        l0.append(p2.asPoint())
+                        l2.append(p1.asPoint())
+                    else:
+                        l0.append(p1.asPoint())
+                        l2.append(p2.asPoint())
                     bcount += 1
             if bcount != 2:
                 feedback.reportError("Le pont %s n'intersecte pas avec les berges !" % pont_f.id(), True)
