@@ -47,7 +47,11 @@ class ProfilerPonts(QgsProcessingAlgorithm):
                     l1.append(point_g.asPoint())
                     l2.append(p2.asPoint())
                     bcount += 1
+<<<<<<< HEAD
             if bcount != 2:
+=======
+            if bcount < 2:
+>>>>>>> 264f4c01388d84464ce0f3b50f15e84393894849
                 feedback.reportError("Le pont %s n'intersecte pas avec les berges !" % pont_f.id(), True)
                 return {}
             lines.append((QgsGeometry.fromPolylineXY(l0), [0, pont, 'Profil']))
