@@ -36,6 +36,7 @@ class ProfilerPonts(QgsProcessingAlgorithm):
             l0 = []
             l1 = []
             l2 = []
+            bcount = 0
             for berge_f in berges.getFeatures(): # pour chaque pont on traite une berge, puis l'autre
                 berge_g = berge_f.geometry()
                 if berge_g.intersects(pont_g): # on vérifie l'intersection, si absence d'intersection on renvoie une erreur et on stoppe l'algorithme
@@ -45,9 +46,10 @@ class ProfilerPonts(QgsProcessingAlgorithm):
                     l0.append(p1.asPoint())
                     l1.append(point_g.asPoint())
                     l2.append(p2.asPoint())
-                else:
-                    feedback.reportError("Le pont %s n'intersecte pas avec les berges !" % pont_f.id(), True)
-                    return {}
+                    bcount += 1
+            if bcount < 2:
+                feedback.reportError("Le pont %s n'intersecte pas avec les berges !" % pont_f.id(), True)
+                return {}
             lines.append((QgsGeometry.fromPolylineXY(l0), [0, pont, 'Profil']))
             lines.append((QgsGeometry.fromPolylineXY(l1), [1, pont, 'Pont']))
             lines.append((QgsGeometry.fromPolylineXY(l2), [2, pont, 'Profil']))
