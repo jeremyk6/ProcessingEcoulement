@@ -18,7 +18,7 @@ class ComparerProfils(QgsProcessingAlgorithm):
         
         # entrées
         points = parameters['profils']
-        nombre_ponts = 5
+        nombre_ponts = 3
         nombre_points = 20
         
         # sorties
@@ -33,8 +33,10 @@ class ComparerProfils(QgsProcessingAlgorithm):
             et = []
             for nordre in range(nombre_points): # traitement par ordre du point dans le pont
                 pts = []
+                i = 0
                 for point_f in points.getFeatures("pont = %s and ordre = %s"%(npont,nordre)): # traitement des 3 points du même ordre
                     pts.append(point_f.attributes()[-1])
+                    i += 1
                 me.append((abs(pts[0]-pts[1])+abs(pts[0]-pts[2])+abs(pts[1]-pts[2]))/3) # moyenne des écarts sur le point
                 et.append(statistics.stdev(pts))
             moyennes_ecarts.append(me)
