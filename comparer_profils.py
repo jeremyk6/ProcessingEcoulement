@@ -35,6 +35,7 @@ class ComparerProfils(QgsProcessingAlgorithm):
             for raster in rasters:
                 t_raster = []
                 t_raster.append([''])
+                t_raster.append(['Valeur du raster (pont)'])
                 t_raster.append(['Ecart profil 1 - pont'])
                 t_raster.append(['Ecart profil 2 - pont'])
                 t_raster.append(['Ecart profil 1 - profil 2'])
@@ -49,12 +50,13 @@ class ComparerProfils(QgsProcessingAlgorithm):
                     ecart_p1_pont = (abs(pts[0]-pts[1])) # ecart entre le premier profil et le pont
                     ecart_p2_pont = (abs(pts[2]-pts[1])) # ecart entre le second profil et le pont
                     ecart_p1_p2   = (abs(pts[0]-pts[2])) # ecart entre les deux profils
-                    t_raster[1].append(ecart_p1_pont)
-                    t_raster[2].append(ecart_p2_pont)
-                    t_raster[3].append(ecart_p1_p2)
-                t_raster[1] += [statistics.mean(t_raster[1][1:-1]), statistics.stdev(t_raster[1][1:-1])]
+                    t_raster[1].append(pts[1])
+                    t_raster[2].append(ecart_p1_pont)
+                    t_raster[3].append(ecart_p2_pont)
+                    t_raster[4].append(ecart_p1_p2)
                 t_raster[2] += [statistics.mean(t_raster[2][1:-1]), statistics.stdev(t_raster[2][1:-1])]
                 t_raster[3] += [statistics.mean(t_raster[3][1:-1]), statistics.stdev(t_raster[3][1:-1])]
+                t_raster[4] += [statistics.mean(t_raster[4][1:-1]), statistics.stdev(t_raster[4][1:-1])]
                 t_pont.append(t_raster)
             tableau.append(t_pont)
         
