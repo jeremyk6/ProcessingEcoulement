@@ -2,6 +2,8 @@ from qgis.core import QgsProcessing, QgsProcessingAlgorithm, QgsProcessingMultiS
 from qgis.core import QgsGeometry, QgsVectorLayer, QgsFeature, QgsVectorFileWriter, QgsFields, QgsWkbTypes, QgsCoordinateReferenceSystem, QgsFields, QgsField
 import processing
 import statistics
+from io import StringIO
+import matplotlib.pyplot as plt
 from yattag import Doc, indent
 
 class ComparerProfils(QgsProcessingAlgorithm):
@@ -21,7 +23,6 @@ class ComparerProfils(QgsProcessingAlgorithm):
         # sorties
         output = self.parameterAsFileOutput(parameters, 'OUTPUT', context)
         doc, tag, text, line = Doc().ttl()
-        donnees_html = []
 
         # attributs
         rasters = points.uniqueValues(points.dataProvider().fields().indexFromName('raster'))
@@ -30,8 +31,10 @@ class ComparerProfils(QgsProcessingAlgorithm):
         
         # traitement
         tableau = []
+        svg = []
         for pont in ponts: # traitement par pont
             t_pont = []
+            graphique = plt.figure()
             for raster in rasters:
                 t_raster = []
                 t_raster.append([''])
@@ -43,6 +46,7 @@ class ComparerProfils(QgsProcessingAlgorithm):
                     t_raster[0].append(i)
                 t_raster[0].append('Moyenne')
                 t_raster[0].append('Ecart-type')
+                pts_pont = []
                 for nordre in range(npoints): # traitement par ordre du point dans le pont
                     pts = [] # traitement des 3 points du même ordre
                     for point_f in points.getFeatures("pont = %s and raster = '%s' and ordre = %s"%(pont, raster, nordre)):
@@ -51,13 +55,21 @@ class ComparerProfils(QgsProcessingAlgorithm):
                     ecart_p2_pont = (abs(pts[2]-pts[1])) # ecart entre le second profil et le pont
                     ecart_p1_p2   = (abs(pts[0]-pts[2])) # ecart entre les deux profils
                     t_raster[1].append(pts[1])
+                    pts_pont.append(pts[1])
                     t_raster[2].append(ecart_p1_pont)
                     t_raster[3].append(ecart_p2_pont)
                     t_raster[4].append(ecart_p1_p2)
+                plt.plot([i for i in range(npoints)], pts_pont, label=raster)
                 t_raster[2] += [statistics.mean(t_raster[2][1:-1]), statistics.stdev(t_raster[2][1:-1])]
                 t_raster[3] += [statistics.mean(t_raster[3][1:-1]), statistics.stdev(t_raster[3][1:-1])]
                 t_raster[4] += [statistics.mean(t_raster[4][1:-1]), statistics.stdev(t_raster[4][1:-1])]
                 t_pont.append(t_raster)
+            plt.xticks([i for i in range(npoints)])
+            plt.legend()
+            buff = StringIO()
+            graphique.savefig(buff, format='svg')
+            buff.seek(0)
+            svg.append(buff.getvalue())
             tableau.append(t_pont)
         
         # ecriture du document HTML
@@ -69,6 +81,7 @@ class ComparerProfils(QgsProcessingAlgorithm):
                 i_pont = 0
                 for pont in ponts: # traitement par pont
                     line('h1', 'Pont %s'%pont)
+                    doc.asis(svg[i_pont])
                     i_raster = 0
                     for raster in rasters:
                         line('h2', raster)
