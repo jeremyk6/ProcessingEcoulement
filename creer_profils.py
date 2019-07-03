@@ -18,7 +18,7 @@ class ProfilsDepuisLignes(QgsProcessingAlgorithm):
         results = {}
         
         # entrées
-        lignes = parameters['lignes']
+        lignes = self.parameterAsVectorLayer(parameters, 'lignes', context)
         rasters = parameters['rasters']
         
         # sorties

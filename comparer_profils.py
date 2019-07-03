@@ -18,7 +18,7 @@ class ComparerProfils(QgsProcessingAlgorithm):
         results = {}
         
         # entrées
-        points = parameters['profils']
+        points = self.parameterAsVectorLayer(parameters, 'profils', context)
         
         # sorties
         output = self.parameterAsFileOutput(parameters, 'OUTPUT', context)

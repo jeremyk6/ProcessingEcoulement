@@ -18,8 +18,8 @@ class ProfilerPonts(QgsProcessingAlgorithm):
         results = {}
         
         # entrées
-        ponts = parameters['ponts']
-        berges = parameters['berges']
+        ponts = self.parameterAsVectorLayer(parameters, 'ponts', context)
+        berges = self.parameterAsVectorLayer(parameters, 'berges', context)
         
         # sorties
         lines = []
