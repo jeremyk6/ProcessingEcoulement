@@ -84,10 +84,10 @@ class ProfilsDepuisLignes(QgsProcessingAlgorithm):
         return 'Échantilloner des profils depuis des rasters'
 
     def group(self):
-        return 'Stage IGN'
+        return 'Boîte à outils ponts'
 
     def groupId(self):
-        return 'Stage IGN'
+        return 'Boîte à outils ponts'
 
     def createInstance(self):
         return ProfilsDepuisLignes()

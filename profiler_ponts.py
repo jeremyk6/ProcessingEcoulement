@@ -88,10 +88,10 @@ class ProfilerPonts(QgsProcessingAlgorithm):
         return 'Créer des profils de validation de ponts linéaires'
 
     def group(self):
-        return 'Stage IGN'
+        return 'Boîte à outils ponts'
 
     def groupId(self):
-        return 'Stage IGN'
+        return 'Boîte à outils ponts'
 
     def createInstance(self):
         return ProfilerPonts()

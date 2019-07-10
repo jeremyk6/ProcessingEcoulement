@@ -55,16 +55,16 @@ class CorrigerProfils(QgsProcessingAlgorithm):
                 
 
     def name(self):
-        return 'Corriger les profils'
+        return 'Corriger les profils croisés'
 
     def displayName(self):
-        return 'Corriger les profils'
+        return 'Corriger les profils croisés'
 
     def group(self):
-        return 'Stage IGN'
+        return 'Boite à outils profils'
 
     def groupId(self):
-        return 'Stage IGN'
+        return 'Boite à outils profils'
 
     def createInstance(self):
         return CorrigerProfils()
