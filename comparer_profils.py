@@ -103,10 +103,10 @@ class ComparerProfils(QgsProcessingAlgorithm):
         return results
 
     def name(self):
-        return 'Comparer des profils'
+        return 'Comparer des profils échantillonnés'
 
     def displayName(self):
-        return 'Comparer des profils'
+        return 'Comparer des profils échantillonnés'
 
     def group(self):
         return 'Stage IGN'

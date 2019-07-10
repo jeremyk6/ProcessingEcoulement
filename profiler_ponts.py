@@ -82,10 +82,10 @@ class ProfilerPonts(QgsProcessingAlgorithm):
                 
 
     def name(self):
-        return 'Profiler les ponts'
+        return 'Créer des profils de validation de ponts linéaires'
 
     def displayName(self):
-        return 'Profiler les ponts'
+        return 'Créer des profils de validation de ponts linéaires'
 
     def group(self):
         return 'Stage IGN'

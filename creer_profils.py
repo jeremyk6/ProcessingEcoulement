@@ -78,10 +78,10 @@ class ProfilsDepuisLignes(QgsProcessingAlgorithm):
                 
 
     def name(self):
-        return 'Profils depuis des lignes'
+        return 'Échantilloner des profils depuis des rasters'
 
     def displayName(self):
-        return 'Profils depuis des lignes'
+        return 'Échantilloner des profils depuis des rasters'
 
     def group(self):
         return 'Stage IGN'
