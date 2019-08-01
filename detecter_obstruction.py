@@ -76,13 +76,16 @@ class DetecterObstructions(QgsProcessingAlgorithm):
         
         # écriture des données en sortie
         fields = QgsFields()
+        fields.append(QgsField("id", QVariant.Int))
         fields.append(QgsField("obstruct", QVariant.Int))
         writer = QgsVectorFileWriter(output, "System", fields, QgsWkbTypes.LineString, QgsCoordinateReferenceSystem(2154), "ESRI Shapefile")
+        id = 1
         for profil_f in profils.getFeatures():
             if profil_f.id() not in ids:
-                profil_f.setAttributes([0])
+                profil_f.setAttributes([0,0])
+                id += 1
             else:
-                profil_f.setAttributes([1])
+                profil_f.setAttributes([id,1])
             writer.addFeature(profil_f)
             
         feedback.setCurrentStep(2)
