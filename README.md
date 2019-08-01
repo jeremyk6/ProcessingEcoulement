@@ -7,3 +7,4 @@ aval).
 * corriger_profils.py : utilisé pour lisser l'azimuth des profils et limiter les croisements.
 * interpoler_valeurs_profils.py : permet l'interpolation de valeurs d'une série de profils entre le premier et le dernier.
 * detecter_obstruction.py : permet la détection d'obstruction d'écoulement sur un MNT à l'aide profils tracés le long d'un linéaire.
+* creer_points_raster.py : permet de créer les points à interpoler sur les profils de cours d'eau souterrains.
