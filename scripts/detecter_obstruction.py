@@ -12,11 +12,7 @@ class DetecterObstructions(QgsProcessingAlgorithm):
         self.addParameter(QgsProcessingParameterNumber('seuil', 'Seuil de différence', type=QgsProcessingParameterNumber.Double, minValue=0, maxValue=5, defaultValue=1))
         self.addParameter(QgsProcessingParameterVectorDestination('OUTPUT', 'Profils repérés'))
 
-    def processAlgorithm(self, parameters, context, model_feedback):
-        # variables propres à Processing
-        feedback = QgsProcessingMultiStepFeedback(2, model_feedback)
-        results = {}
-        
+    def processAlgorithm(self, parameters, context, model_feedback):      
         # entrées
         profils = self.parameterAsVectorLayer(parameters, 'profils', context)
         mnt = self.parameterAsRasterLayer(parameters, 'mnt', context)
@@ -28,12 +24,15 @@ class DetecterObstructions(QgsProcessingAlgorithm):
         echantillons_nb = parameters['echantillons_nb'] # nombre d'échantillons
         seuil = parameters['seuil']
 
+        # variables propres à Processing
+        feedback = QgsProcessingMultiStepFeedback(profils.featureCount()*2, model_feedback)
+        status = 0
+        results = {}
+
         # traitement
         low = None
         ids = []
         plist = []
-        previous = None
-        diff = 0
         # échantillonnage des points sur chaque profil
         for profil_f in profils.getFeatures():
             profil_g = profil_f.geometry()
@@ -50,29 +49,20 @@ class DetecterObstructions(QgsProcessingAlgorithm):
                 low = min(elevations)
                 plist.append(profil_f)
             else:
-                #if not plist and abs(((min(previous)-min(elevations))-diff)/diff)>0.55:
-                #    ids.append(profil_f.id())
-                #elif [i for i in elevations if i <= low+seuil]:
-                if [i for i in elevations if i <= low+seuil]:
+                if not plist and (max(elevations)-min(elevations))<1.5:
+                    ids.append(profil_f.id())
+                elif min(elevations) <= low+seuil:
                     low = min(elevations)
                     plist.append(profil_f.id())
                 else:
                     ids.append(profil_f.id())
                     if len(plist) <= 5: 
                         ids += plist
-                    if plist:
-                        diff = min(elevations)-low
                     del plist[:]
-            previous = elevations
-            # ↑ TODO : si le dernier profil est souterrain, différence entre les deux min. pour estimer s'il est toujours souterrain
-
-            
-            
-            
-            
-        feedback.setCurrentStep(1)
-        if feedback.isCanceled():
-            return {}
+            status += 1
+            feedback.setCurrentStep(status)
+            if feedback.isCanceled():
+                return {}
         
         # écriture des données en sortie
         fields = QgsFields()
@@ -87,8 +77,10 @@ class DetecterObstructions(QgsProcessingAlgorithm):
             else:
                 profil_f.setAttributes([id,1])
             writer.addFeature(profil_f)
-            
-        feedback.setCurrentStep(2)
+            status += 1
+            feedback.setCurrentStep(status)
+            if feedback.isCanceled():
+                return {}
         
         results['OUTPUT']=output
         return results
