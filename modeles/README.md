@@ -34,3 +34,13 @@
 * Sorties :
   * MNT intégré : Raster
 * Description : Intègre un MNT intermédiaire au MNT original en ne prenant en compte que les valeurs inférieure ou égales au MNT original auquel on soustrait un seuil de différence pour limiter l'impact en dehors des berges et éliminer les éventuelles nouvelles obstructions.
+
+### Ajouter les bâtiments - *ajouter_batiments.model3*
+
+* Entrées :
+  * MNT original : Raster
+  * Bâtiments : Surfacique vecteur
+  * Résolution du MNT : Réel
+* Sorties :
+  * MNT + Bâtiments : Raster
+* Description : Rastérise et ajoute les bâtiments à un MNT sans bâtiments. Pour les bâtiments de hauteur nulle, récupère la hauteur du bâtiment le plus proche.
