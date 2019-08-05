@@ -14,7 +14,7 @@ class DetecterObstructions(QgsProcessingAlgorithm):
 
     def processAlgorithm(self, parameters, context, model_feedback):      
         # entrées
-        profils = self.parameterAsVectorLayer(parameters, 'profils', context)
+        profils_l = self.parameterAsVectorLayer(parameters, 'profils', context)
         mnt = self.parameterAsRasterLayer(parameters, 'mnt', context)
         
         # sorties
@@ -25,62 +25,101 @@ class DetecterObstructions(QgsProcessingAlgorithm):
         seuil = parameters['seuil']
 
         # variables propres à Processing
-        feedback = QgsProcessingMultiStepFeedback(profils.featureCount()*2, model_feedback)
+        feedback = QgsProcessingMultiStepFeedback(profils_l.featureCount()*2, model_feedback)
         status = 0
         results = {}
 
-        # traitement
-        low = None
-        ids = []
-        plist = []
-        # échantillonnage des points sur chaque profil
-        for profil_f in profils.getFeatures():
-            profil_g = profil_f.geometry()
-            freq = profil_g.length()/(echantillons_nb-1)
-            echantillons_g = [QgsGeometry().fromPointXY(profil_g.asPolyline()[0])]
-            for i in range(1, echantillons_nb-1):
-                echantillons_g.append(profil_g.interpolate(freq*i))
-            echantillons_g.append(QgsGeometry().fromPointXY(profil_g.asPolyline()[-1]))
-            elevations = []
-            for echantillon_g in echantillons_g:                
-                elevation = mnt.dataProvider().sample(echantillon_g.asPoint(), 1)[0]
-                elevations.append(elevation)
-            if low == None:
-                low = min(elevations)
-                plist.append(profil_f)
-            else:
-                if not plist and (max(elevations)-min(elevations))<1.5:
-                    ids.append(profil_f.id())
-                elif min(elevations) <= low+seuil:
-                    low = min(elevations)
-                    plist.append(profil_f.id())
-                else:
-                    ids.append(profil_f.id())
-                    if len(plist) <= 5: 
-                        ids += plist
-                    del plist[:]
-            status += 1
-            feedback.setCurrentStep(status)
-            if feedback.isCanceled():
-                return {}
-        
-        # écriture des données en sortie
+        # preparation de la sortie
+        id = 1
         fields = QgsFields()
         fields.append(QgsField("id", QVariant.Int))
         fields.append(QgsField("obstruct", QVariant.Int))
         writer = QgsVectorFileWriter(output, "System", fields, QgsWkbTypes.LineString, QgsCoordinateReferenceSystem(2154), "ESRI Shapefile")
-        id = 1
-        for profil_f in profils.getFeatures():
-            if profil_f.id() not in ids:
-                profil_f.setAttributes([0,0])
-                id += 1
-            else:
-                profil_f.setAttributes([id,1])
-            writer.addFeature(profil_f)
-            status += 1
-            feedback.setCurrentStep(status)
-            if feedback.isCanceled():
-                return {}
+
+        # separation des profils par cours d'eau
+        alg_params = {
+            'FIELD': 'LINE',
+            'INPUT': profils_l,
+            'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
+        }
+        split_profils = processing.run('qgis:splitvectorlayer', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+
+        for layer in split_profils['OUTPUT_LAYERS']:
+           
+            profils = QgsVectorLayer(layer, "profils", "ogr")
+
+            # traitement
+            low = None
+            ids = []
+            plist = []
+            # échantillonnage des points sur chaque profil
+            for profil_f in profils.getFeatures():
+                profil_g = profil_f.geometry()
+                freq = profil_g.length()/(echantillons_nb-1)
+                echantillons_g = [QgsGeometry().fromPointXY(profil_g.asMultiPolyline()[0][0])]
+                for i in range(1, echantillons_nb-1):
+                    echantillons_g.append(profil_g.interpolate(freq*i))
+                echantillons_g.append(QgsGeometry().fromPointXY(profil_g.asMultiPolyline()[0][-1]))
+                elevations = []
+                for echantillon_g in echantillons_g:                
+                    elevation = mnt.dataProvider().sample(echantillon_g.asPoint(), 1)[0]
+                    elevations.append(elevation)
+                if low == None:
+                    low = min(elevations)
+                    plist.append(profil_f)
+                else:
+                    if not plist and (max(elevations)-min(elevations))<1.5:
+                        ids.append(profil_f.id())
+                    elif min(elevations) <= low+seuil:
+                        low = min(elevations)
+                        plist.append(profil_f.id())
+                    else:
+                        ids.append(profil_f.id())
+                        if len(plist) <= 5: 
+                            ids += plist
+                        del plist[:]
+                status += 1
+                feedback.setCurrentStep(status)
+                if feedback.isCanceled():
+                    return {}
+
+            # post processing à la R.A.C.H.E™ (https://www.la-rache.com/)
+            # permet d'étendre la détection à x profils amont/aval pour permettre l'interpolation
+            prev = []
+            count = 0
+            ext = 2
+            for profil_f in profils.getFeatures():
+                if len(prev) > 1:
+                    if count == 0:
+                        if profil_f.id() in ids and prev[-1] not in ids:
+                            ids += prev
+                        if profil_f.id() not in ids and prev[-1] in ids:
+                            ids.append(profil_f.id())
+                            count += 1
+                    else:
+                        if count < ext:
+                            ids.append(profil_f.id())
+                            count += 1
+                        else:
+                            count = 0
+                prev.append(profil_f.id())
+                if len(prev) > ext:
+                    del prev[0]
+
+            
+            # attribution d'un identifiant unique à chaque groupe de profils souterrains
+            # ecriture de chaque profil dans la nouvelle couche
+            for profil_f in profils.getFeatures():
+                if profil_f.id() not in ids:
+                    profil_f.setAttributes([0,0])
+                    id += 1
+                else:
+                    profil_f.setAttributes([id,1])
+                writer.addFeature(profil_f)
+                status += 1
+                feedback.setCurrentStep(status)
+                if feedback.isCanceled():
+                    return {}
         
         results['OUTPUT']=output
         return results
