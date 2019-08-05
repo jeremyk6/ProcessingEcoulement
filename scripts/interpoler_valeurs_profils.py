@@ -34,10 +34,10 @@ class InterpolerValeursProfils(QgsProcessingAlgorithm):
         for profil_f in profils.getFeatures():
             profil_g = profil_f.geometry()
             freq = profil_g.length()/(echantillons_nb-1)
-            echantillons_g = [QgsGeometry().fromPointXY(profil_g.asPolyline()[0])]
+            echantillons_g = [QgsGeometry().fromPointXY(profil_g.asMultiPolyline()[0][0])]
             for i in range(1, echantillons_nb-1):
                 echantillons_g.append(profil_g.interpolate(freq*i))
-            echantillons_g.append(QgsGeometry().fromPointXY(profil_g.asPolyline()[-1]))
+            echantillons_g.append(QgsGeometry().fromPointXY(profil_g.asMultiPolyline()[0][-1]))
             profils_pt.append(echantillons_g)
             elevations = []
             for echantillon_g in echantillons_g:                
