@@ -36,24 +36,18 @@ class DetecterObstructions(QgsProcessingAlgorithm):
         fields.append(QgsField("obstruct", QVariant.Int))
         writer = QgsVectorFileWriter(output, "System", fields, QgsWkbTypes.LineString, QgsCoordinateReferenceSystem(2154), "ESRI Shapefile")
 
-        # separation des profils par cours d'eau
-        alg_params = {
-            'FIELD': 'LINE',
-            'INPUT': profils_l,
-            'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
-        }
-        split_profils = processing.run('qgis:splitvectorlayer', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+        lines_ids = profils_l.uniqueValues(profils_l.fields().indexOf('LINE'))
 
-        for layer in split_profils['OUTPUT_LAYERS']:
-           
-            profils = QgsVectorLayer(layer, "profils", "ogr")
+        for line_id in lines_ids:
 
             # traitement
             low = None
             ids = []
             plist = []
+            p2 = None
+            count = 0
             # échantillonnage des points sur chaque profil
-            for profil_f in profils.getFeatures():
+            for profil_f in profils_l.getFeatures("LINE = %s"%line_id):
                 profil_g = profil_f.geometry()
                 freq = profil_g.length()/(echantillons_nb-1)
                 echantillons_g = [QgsGeometry().fromPointXY(profil_g.asMultiPolyline()[0][0])]
@@ -78,17 +72,23 @@ class DetecterObstructions(QgsProcessingAlgorithm):
                         if len(plist) <= 5: 
                             ids += plist
                         del plist[:]
+                    if count == 1:
+                        p2 = profil_f.id()
                 status += 1
+                count += 1
                 feedback.setCurrentStep(status)
                 if feedback.isCanceled():
                     return {}
+
+            if p2 in ids:
+                del ids[:]
 
             # post processing à la R.A.C.H.E™ (https://www.la-rache.com/)
             # permet d'étendre la détection à x profils amont/aval pour permettre l'interpolation
             prev = []
             count = 0
             ext = 2
-            for profil_f in profils.getFeatures():
+            for profil_f in profils_l.getFeatures("LINE = %s"%line_id):
                 if len(prev) > 1:
                     if count == 0:
                         if profil_f.id() in ids and prev[-1] not in ids:
@@ -109,7 +109,7 @@ class DetecterObstructions(QgsProcessingAlgorithm):
             
             # attribution d'un identifiant unique à chaque groupe de profils souterrains
             # ecriture de chaque profil dans la nouvelle couche
-            for profil_f in profils.getFeatures():
+            for profil_f in profils_l.getFeatures("LINE = %s"%line_id):
                 if profil_f.id() not in ids:
                     profil_f.setAttributes([0,0])
                     id += 1
