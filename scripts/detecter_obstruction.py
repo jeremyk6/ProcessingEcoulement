@@ -29,6 +29,10 @@ class DetecterObstructions(QgsProcessingAlgorithm):
         status = 0
         results = {}
 
+        if profils_l.fields().indexOf('LINE')<0:
+            feedback.reportError("Les profils en entrée doivent contenir un attribut numérique LINE qui identifie chaque cours d'eau de manière unique !", True)
+            return{}
+
         # preparation de la sortie
         id = 1
         fields = QgsFields()
