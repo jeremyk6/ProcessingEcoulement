@@ -1,0 +1,344 @@
+<!DOCTYPE model>
+<Option type="Map">
+  <Option type="Map" name="children">
+    <Option type="Map" name="gdal:clipvectorbyextent_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="gdal:clipvectorbyextent" name="alg_id"/>
+      <Option type="QString" value="Tronçons hydro sur MNT" name="component_description"/>
+      <Option type="double" value="427" name="component_pos_x"/>
+      <Option type="double" value="358" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="gdal:clipvectorbyextent_1" name="id"/>
+      <Option name="outputs"/>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="EXTENT">
+          <Option type="Map">
+            <Option type="QString" value="MNT" name="parameter_name"/>
+            <Option type="int" value="0" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="INPUT">
+          <Option type="Map">
+            <Option type="QString" value="trononshydrographiques" name="parameter_name"/>
+            <Option type="int" value="0" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="OPTIONS">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="QString" value="" name="static_value"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+    <Option type="Map" name="native:clip_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="native:clip" name="alg_id"/>
+      <Option type="QString" value="Profils découpés par l'emprise" name="component_description"/>
+      <Option type="double" value="1037" name="component_pos_x"/>
+      <Option type="double" value="896" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="native:clip_1" name="id"/>
+      <Option name="outputs"/>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="INPUT">
+          <Option type="Map">
+            <Option type="QString" value="saga:crossprofiles_1" name="child_id"/>
+            <Option type="QString" value="PROFILES" name="output_name"/>
+            <Option type="int" value="1" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="OVERLAY">
+          <Option type="Map">
+            <Option type="QString" value="qgis:polygonfromlayerextent_1" name="child_id"/>
+            <Option type="QString" value="OUTPUT" name="output_name"/>
+            <Option type="int" value="1" name="source"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+    <Option type="Map" name="native:dissolve_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="native:dissolve" name="alg_id"/>
+      <Option type="QString" value="Regrouper" name="component_description"/>
+      <Option type="double" value="422" name="component_pos_x"/>
+      <Option type="double" value="611" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="native:dissolve_1" name="id"/>
+      <Option name="outputs"/>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="FIELD">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="QString" value="ID_C_EAU" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="INPUT">
+          <Option type="Map">
+            <Option type="QString" value="qgis:fieldcalculator_1" name="child_id"/>
+            <Option type="QString" value="OUTPUT" name="output_name"/>
+            <Option type="int" value="1" name="source"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+    <Option type="Map" name="qgis:fieldcalculator_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="qgis:fieldcalculator" name="alg_id"/>
+      <Option type="QString" value="Identification des tronçons NI" name="component_description"/>
+      <Option type="double" value="420" name="component_pos_x"/>
+      <Option type="double" value="498" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="qgis:fieldcalculator_1" name="id"/>
+      <Option name="outputs"/>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="FIELD_LENGTH">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="int" value="10" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="FIELD_NAME">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="QString" value="ID_C_EAU" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="FIELD_PRECISION">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="int" value="3" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="FIELD_TYPE">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="int" value="2" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="FORMULA">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="QString" value="CASE&#xd;&#xa;&#x9;WHEN ID_C_EAU IS NULL THEN $id&#xd;&#xa;&#x9;ELSE ID_C_EAU&#xd;&#xa;END" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="INPUT">
+          <Option type="Map">
+            <Option type="QString" value="gdal:clipvectorbyextent_1" name="child_id"/>
+            <Option type="QString" value="OUTPUT" name="output_name"/>
+            <Option type="int" value="1" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="NEW_FIELD">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="bool" value="false" name="static_value"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+    <Option type="Map" name="qgis:polygonfromlayerextent_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="qgis:polygonfromlayerextent" name="alg_id"/>
+      <Option type="QString" value="Emprise du MNT" name="component_description"/>
+      <Option type="double" value="938" name="component_pos_x"/>
+      <Option type="double" value="488" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="qgis:polygonfromlayerextent_1" name="id"/>
+      <Option name="outputs"/>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="INPUT">
+          <Option type="Map">
+            <Option type="QString" value="MNT" name="parameter_name"/>
+            <Option type="int" value="0" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="ROUND_TO">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="double" value="0" name="static_value"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+    <Option type="Map" name="saga:crossprofiles_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="saga:crossprofiles" name="alg_id"/>
+      <Option type="QString" value="Sections transversales" name="component_description"/>
+      <Option type="double" value="702" name="component_pos_x"/>
+      <Option type="double" value="737" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="saga:crossprofiles_1" name="id"/>
+      <Option name="outputs"/>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="DEM">
+          <Option type="Map">
+            <Option type="QString" value="MNT" name="parameter_name"/>
+            <Option type="int" value="0" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="DIST_LINE">
+          <Option type="Map">
+            <Option type="QString" value="distanceentrelesprofil" name="parameter_name"/>
+            <Option type="int" value="0" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="DIST_PROFILE">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="double" value="20" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="LINES">
+          <Option type="Map">
+            <Option type="QString" value="native:dissolve_1" name="child_id"/>
+            <Option type="QString" value="OUTPUT" name="output_name"/>
+            <Option type="int" value="1" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="NUM_PROFILE">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="int" value="3" name="static_value"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+    <Option type="Map" name="script:Détecter les obstructions_1">
+      <Option type="bool" value="true" name="active"/>
+      <Option name="alg_config"/>
+      <Option type="QString" value="script:Détecter les obstructions" name="alg_id"/>
+      <Option type="QString" value="Détecter les obstructions" name="component_description"/>
+      <Option type="double" value="1210" name="component_pos_x"/>
+      <Option type="double" value="484" name="component_pos_y"/>
+      <Option name="dependencies"/>
+      <Option type="QString" value="script:Détecter les obstructions_1" name="id"/>
+      <Option type="Map" name="outputs">
+        <Option type="Map" name="Tronçons repérés">
+          <Option type="QString" value="script:Détecter les obstructions_1" name="child_id"/>
+          <Option type="QString" value="Tronçons repérés" name="component_description"/>
+          <Option type="double" value="1410" name="component_pos_x"/>
+          <Option type="double" value="529" name="component_pos_y"/>
+          <Option type="invalid" name="default_value"/>
+          <Option type="bool" value="false" name="mandatory"/>
+          <Option type="QString" value="Tronçons repérés" name="name"/>
+          <Option type="QString" value="OUTPUT" name="output_name"/>
+        </Option>
+      </Option>
+      <Option type="bool" value="true" name="outputs_collapsed"/>
+      <Option type="bool" value="true" name="parameters_collapsed"/>
+      <Option type="Map" name="params">
+        <Option type="List" name="echantillons_nb">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="int" value="20" name="static_value"/>
+          </Option>
+        </Option>
+        <Option type="List" name="mnt">
+          <Option type="Map">
+            <Option type="QString" value="MNT" name="parameter_name"/>
+            <Option type="int" value="0" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="profils">
+          <Option type="Map">
+            <Option type="QString" value="native:clip_1" name="child_id"/>
+            <Option type="QString" value="OUTPUT" name="output_name"/>
+            <Option type="int" value="1" name="source"/>
+          </Option>
+        </Option>
+        <Option type="List" name="seuil">
+          <Option type="Map">
+            <Option type="int" value="2" name="source"/>
+            <Option type="double" value="0.6" name="static_value"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+  </Option>
+  <Option name="help"/>
+  <Option name="modelVariables"/>
+  <Option type="QString" value="Stage IGN" name="model_group"/>
+  <Option type="QString" value="Détecter les obstructions sur les tronçons hydro" name="model_name"/>
+  <Option type="Map" name="parameterDefinitions">
+    <Option type="Map" name="MNT">
+      <Option type="invalid" name="default"/>
+      <Option type="QString" value="MNT" name="description"/>
+      <Option type="int" value="0" name="flags"/>
+      <Option name="metadata"/>
+      <Option type="QString" value="MNT" name="name"/>
+      <Option type="QString" value="raster" name="parameter_type"/>
+    </Option>
+    <Option type="Map" name="distanceentrelesprofil">
+      <Option type="int" value="1" name="data_type"/>
+      <Option type="QString" value="5" name="default"/>
+      <Option type="QString" value="Distance entre les profil" name="description"/>
+      <Option type="int" value="0" name="flags"/>
+      <Option type="double" value="1.7976931348623157e+308" name="max"/>
+      <Option name="metadata"/>
+      <Option type="double" value="0.1" name="min"/>
+      <Option type="QString" value="distanceentrelesprofil" name="name"/>
+      <Option type="QString" value="number" name="parameter_type"/>
+    </Option>
+    <Option type="Map" name="script:Détecter les obstructions_1:Tronçons repérés">
+      <Option type="bool" value="true" name="create_by_default"/>
+      <Option type="int" value="-1" name="data_type"/>
+      <Option type="invalid" name="default"/>
+      <Option type="QString" value="Tronçons repérés" name="description"/>
+      <Option type="int" value="0" name="flags"/>
+      <Option name="metadata"/>
+      <Option type="QString" value="script:Détecter les obstructions_1:Tronçons repérés" name="name"/>
+      <Option type="QString" value="vectorDestination" name="parameter_type"/>
+      <Option type="bool" value="true" name="supports_non_file_outputs"/>
+    </Option>
+    <Option type="Map" name="trononshydrographiques">
+      <Option type="List" name="data_types">
+        <Option type="int" value="5"/>
+      </Option>
+      <Option type="invalid" name="default"/>
+      <Option type="QString" value="Tronçons hydrographiques" name="description"/>
+      <Option type="int" value="0" name="flags"/>
+      <Option name="metadata"/>
+      <Option type="QString" value="trononshydrographiques" name="name"/>
+      <Option type="QString" value="vector" name="parameter_type"/>
+    </Option>
+  </Option>
+  <Option type="Map" name="parameters">
+    <Option type="Map" name="MNT">
+      <Option type="QString" value="MNT" name="component_description"/>
+      <Option type="double" value="560" name="component_pos_x"/>
+      <Option type="double" value="151" name="component_pos_y"/>
+      <Option type="QString" value="MNT" name="name"/>
+    </Option>
+    <Option type="Map" name="distanceentrelesprofil">
+      <Option type="QString" value="distanceentrelesprofil" name="component_description"/>
+      <Option type="double" value="238" name="component_pos_x"/>
+      <Option type="double" value="772" name="component_pos_y"/>
+      <Option type="QString" value="distanceentrelesprofil" name="name"/>
+    </Option>
+    <Option type="Map" name="trononshydrographiques">
+      <Option type="QString" value="trononshydrographiques" name="component_description"/>
+      <Option type="double" value="198" name="component_pos_x"/>
+      <Option type="double" value="157" name="component_pos_y"/>
+      <Option type="QString" value="trononshydrographiques" name="name"/>
+    </Option>
+  </Option>
+</Option>
