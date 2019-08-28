@@ -61,10 +61,10 @@ class CorrigerProfils(QgsProcessingAlgorithm):
         return 'Corriger les profils croisés'
 
     def group(self):
-        return 'Boite à outils profils'
+        return 'Boîte à outils géométriques'
 
     def groupId(self):
-        return 'Boite à outils profils'
+        return 'Boîte à outils géométriques'
 
     def createInstance(self):
         return CorrigerProfils()

@@ -109,10 +109,10 @@ class ComparerProfils(QgsProcessingAlgorithm):
         return 'Comparer des profils échantillonnés'
 
     def group(self):
-        return 'Boîte à outils ponts'
+        return 'Boîte à outils validation'
 
     def groupId(self):
-        return 'Boîte à outils ponts'
+        return 'Boîte à outils validation'
 
     def createInstance(self):
         return ComparerProfils()

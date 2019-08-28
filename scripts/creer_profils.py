@@ -78,16 +78,16 @@ class ProfilsDepuisLignes(QgsProcessingAlgorithm):
                 
 
     def name(self):
-        return 'Échantilloner des profils depuis des rasters'
+        return 'Discrétiser des profils depuis des rasters'
 
     def displayName(self):
-        return 'Échantilloner des profils depuis des rasters'
+        return 'Discrétiser des profils depuis des rasters'
 
     def group(self):
-        return 'Boîte à outils ponts'
+        return 'Boîte à outils validation'
 
     def groupId(self):
-        return 'Boîte à outils ponts'
+        return 'Boîte à outils validation'
 
     def createInstance(self):
         return ProfilsDepuisLignes()

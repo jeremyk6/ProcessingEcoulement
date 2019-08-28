@@ -130,16 +130,16 @@ class DetecterObstructions(QgsProcessingAlgorithm):
                 
 
     def name(self):
-        return 'Détecter les obstructions'
+        return 'Détecter les obstructions sur une série de profils'
 
     def displayName(self):
-        return 'Détecter les obstructions'
+        return 'Détecter les obstructions sur une série de profils'
 
     def group(self):
-        return 'Boîte à outils ponts'
+        return 'Détections sur MNT'
 
     def groupId(self):
-        return 'Boîte à outils ponts'
+        return 'Détections sur MNT'
 
     def createInstance(self):
         return DetecterObstructions()

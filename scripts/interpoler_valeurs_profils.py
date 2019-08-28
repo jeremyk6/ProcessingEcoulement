@@ -84,10 +84,10 @@ class InterpolerValeursProfils(QgsProcessingAlgorithm):
         return 'Interpoler les valeurs d\'une série de profils'
 
     def group(self):
-        return 'Boîte à outils ponts'
+        return 'Détections sur MNT'
 
     def groupId(self):
-        return 'Boîte à outils ponts'
+        return 'Détections sur MNT'
 
     def createInstance(self):
         return InterpolerValeursProfils()

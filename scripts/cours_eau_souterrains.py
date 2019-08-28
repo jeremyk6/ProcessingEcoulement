@@ -126,10 +126,10 @@ class IntgrerUnCoursDeauSouterrain(QgsProcessingAlgorithm):
         return 'Intégrer un cours d\'eau souterrain'
 
     def group(self):
-        return 'Stage IGN'
+        return 'Traitements de MNT'
 
     def groupId(self):
-        return 'Stage IGN'
+        return 'Traitements de MNT'
 
     def createInstance(self):
         return IntgrerUnCoursDeauSouterrain()
