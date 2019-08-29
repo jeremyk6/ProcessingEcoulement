@@ -197,14 +197,14 @@
         </Option>
         <Option name="DIST_LINE" type="List">
           <Option type="Map">
-            <Option name="source" value="2" type="int"/>
-            <Option name="static_value" value="20" type="double"/>
+            <Option name="parameter_name" value="distanceentrelesprofils" type="QString"/>
+            <Option name="source" value="0" type="int"/>
           </Option>
         </Option>
         <Option name="DIST_PROFILE" type="List">
           <Option type="Map">
-            <Option name="source" value="2" type="int"/>
-            <Option name="static_value" value="20" type="double"/>
+            <Option name="parameter_name" value="largeurdesprofils" type="QString"/>
+            <Option name="source" value="0" type="int"/>
           </Option>
         </Option>
         <Option name="LINES" type="List">
@@ -254,10 +254,16 @@
             <Option name="source" value="1" type="int"/>
           </Option>
         </Option>
-        <Option name="seuil" type="List">
+        <Option name="seuil_diff" type="List">
           <Option type="Map">
-            <Option name="source" value="2" type="int"/>
-            <Option name="static_value" value="0.6" type="double"/>
+            <Option name="parameter_name" value="seuildediffrence" type="QString"/>
+            <Option name="source" value="0" type="int"/>
+          </Option>
+        </Option>
+        <Option name="seuil_rug" type="List">
+          <Option type="Map">
+            <Option name="parameter_name" value="seuilderugosit" type="QString"/>
+            <Option name="source" value="0" type="int"/>
           </Option>
         </Option>
       </Option>
@@ -272,14 +278,14 @@
       <Option name="dependencies"/>
       <Option name="id" value="script:Intégrer un cours d'eau souterrain_1" type="QString"/>
       <Option name="outputs" type="Map">
-        <Option name="MNT intégré" type="Map">
+        <Option name="MNT+ce" type="Map">
           <Option name="child_id" value="script:Intégrer un cours d'eau souterrain_1" type="QString"/>
-          <Option name="component_description" value="MNT intégré" type="QString"/>
+          <Option name="component_description" value="MNT+ce" type="QString"/>
           <Option name="component_pos_x" value="1572" type="double"/>
           <Option name="component_pos_y" value="247" type="double"/>
           <Option name="default_value" type="invalid"/>
           <Option name="mandatory" value="false" type="bool"/>
-          <Option name="name" value="MNT intégré" type="QString"/>
+          <Option name="name" value="MNT+ce" type="QString"/>
           <Option name="output_name" value="OUTPUT" type="QString"/>
         </Option>
       </Option>
@@ -301,8 +307,8 @@
         </Option>
         <Option name="rsolution" type="List">
           <Option type="Map">
-            <Option name="source" value="2" type="int"/>
-            <Option name="static_value" value="5" type="double"/>
+            <Option name="parameter_name" value="rsolutiondumnt" type="QString"/>
+            <Option name="source" value="0" type="int"/>
           </Option>
         </Option>
       </Option>
@@ -311,7 +317,7 @@
   <Option name="help"/>
   <Option name="modelVariables"/>
   <Option name="model_group" value="Traitements de MNT" type="QString"/>
-  <Option name="model_name" value="Rétablissement des cours d'eau souterrains" type="QString"/>
+  <Option name="model_name" value="Rétablir les cours d'eau souterrains sur un MNT" type="QString"/>
   <Option name="parameterDefinitions" type="Map">
     <Option name="MNT" type="Map">
       <Option name="default" type="invalid"/>
@@ -321,15 +327,70 @@
       <Option name="name" value="MNT" type="QString"/>
       <Option name="parameter_type" value="raster" type="QString"/>
     </Option>
-    <Option name="script:Intégrer un cours d'eau souterrain_1:MNT intégré" type="Map">
+    <Option name="distanceentrelesprofils" type="Map">
+      <Option name="data_type" value="1" type="int"/>
+      <Option name="default" value="10" type="QString"/>
+      <Option name="description" value="Distance entre les profils" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="max" value="1.7976931348623157e+308" type="double"/>
+      <Option name="metadata"/>
+      <Option name="min" value="0" type="double"/>
+      <Option name="name" value="distanceentrelesprofils" type="QString"/>
+      <Option name="parameter_type" value="number" type="QString"/>
+    </Option>
+    <Option name="largeurdesprofils" type="Map">
+      <Option name="data_type" value="1" type="int"/>
+      <Option name="default" value="10" type="QString"/>
+      <Option name="description" value="Largeur des profils" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="max" value="1.7976931348623157e+308" type="double"/>
+      <Option name="metadata"/>
+      <Option name="min" value="0" type="double"/>
+      <Option name="name" value="largeurdesprofils" type="QString"/>
+      <Option name="parameter_type" value="number" type="QString"/>
+    </Option>
+    <Option name="rsolutiondumnt" type="Map">
+      <Option name="data_type" value="1" type="int"/>
+      <Option name="default" value="5" type="QString"/>
+      <Option name="description" value="Résolution du MNT" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="max" value="1.7976931348623157e+308" type="double"/>
+      <Option name="metadata"/>
+      <Option name="min" value="0" type="double"/>
+      <Option name="name" value="rsolutiondumnt" type="QString"/>
+      <Option name="parameter_type" value="number" type="QString"/>
+    </Option>
+    <Option name="script:Intégrer un cours d'eau souterrain_1:MNT+ce" type="Map">
       <Option name="create_by_default" value="true" type="bool"/>
       <Option name="default" type="invalid"/>
-      <Option name="description" value="MNT intégré" type="QString"/>
+      <Option name="description" value="MNT+ce" type="QString"/>
       <Option name="flags" value="0" type="int"/>
       <Option name="metadata"/>
-      <Option name="name" value="script:Intégrer un cours d'eau souterrain_1:MNT intégré" type="QString"/>
+      <Option name="name" value="script:Intégrer un cours d'eau souterrain_1:MNT+ce" type="QString"/>
       <Option name="parameter_type" value="rasterDestination" type="QString"/>
       <Option name="supports_non_file_outputs" value="true" type="bool"/>
+    </Option>
+    <Option name="seuildediffrence" type="Map">
+      <Option name="data_type" value="1" type="int"/>
+      <Option name="default" value="1" type="QString"/>
+      <Option name="description" value="Seuil de différence" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="max" value="5" type="double"/>
+      <Option name="metadata"/>
+      <Option name="min" value="0" type="double"/>
+      <Option name="name" value="seuildediffrence" type="QString"/>
+      <Option name="parameter_type" value="number" type="QString"/>
+    </Option>
+    <Option name="seuilderugosit" type="Map">
+      <Option name="data_type" value="1" type="int"/>
+      <Option name="default" value="1.5" type="QString"/>
+      <Option name="description" value="Seuil de rugosité" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="max" value="5" type="double"/>
+      <Option name="metadata"/>
+      <Option name="min" value="0" type="double"/>
+      <Option name="name" value="seuilderugosit" type="QString"/>
+      <Option name="parameter_type" value="number" type="QString"/>
     </Option>
     <Option name="trononshydrographiques" type="Map">
       <Option name="data_types" type="List">
@@ -349,6 +410,36 @@
       <Option name="component_pos_x" value="560" type="double"/>
       <Option name="component_pos_y" value="151" type="double"/>
       <Option name="name" value="MNT" type="QString"/>
+    </Option>
+    <Option name="distanceentrelesprofils" type="Map">
+      <Option name="component_description" value="distanceentrelesprofils" type="QString"/>
+      <Option name="component_pos_x" value="340" type="double"/>
+      <Option name="component_pos_y" value="706" type="double"/>
+      <Option name="name" value="distanceentrelesprofils" type="QString"/>
+    </Option>
+    <Option name="largeurdesprofils" type="Map">
+      <Option name="component_description" value="largeurdesprofils" type="QString"/>
+      <Option name="component_pos_x" value="344" type="double"/>
+      <Option name="component_pos_y" value="838" type="double"/>
+      <Option name="name" value="largeurdesprofils" type="QString"/>
+    </Option>
+    <Option name="rsolutiondumnt" type="Map">
+      <Option name="component_description" value="rsolutiondumnt" type="QString"/>
+      <Option name="component_pos_x" value="1365" type="double"/>
+      <Option name="component_pos_y" value="110" type="double"/>
+      <Option name="name" value="rsolutiondumnt" type="QString"/>
+    </Option>
+    <Option name="seuildediffrence" type="Map">
+      <Option name="component_description" value="seuildediffrence" type="QString"/>
+      <Option name="component_pos_x" value="1157" type="double"/>
+      <Option name="component_pos_y" value="310" type="double"/>
+      <Option name="name" value="seuildediffrence" type="QString"/>
+    </Option>
+    <Option name="seuilderugosit" type="Map">
+      <Option name="component_description" value="seuilderugosit" type="QString"/>
+      <Option name="component_pos_x" value="1159" type="double"/>
+      <Option name="component_pos_y" value="363" type="double"/>
+      <Option name="name" value="seuilderugosit" type="QString"/>
     </Option>
     <Option name="trononshydrographiques" type="Map">
       <Option name="component_description" value="trononshydrographiques" type="QString"/>

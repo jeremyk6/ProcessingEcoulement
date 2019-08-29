@@ -1,0 +1,166 @@
+<!DOCTYPE model>
+<Option type="Map">
+  <Option name="children" type="Map">
+    <Option name="gdal:warpreproject_1" type="Map">
+      <Option name="active" value="true" type="bool"/>
+      <Option name="alg_config"/>
+      <Option name="alg_id" value="gdal:warpreproject" type="QString"/>
+      <Option name="component_description" value="Projection (warp)" type="QString"/>
+      <Option name="component_pos_x" value="518" type="double"/>
+      <Option name="component_pos_y" value="418" type="double"/>
+      <Option name="dependencies"/>
+      <Option name="id" value="gdal:warpreproject_1" type="QString"/>
+      <Option name="outputs" type="Map">
+        <Option name="Recalé" type="Map">
+          <Option name="child_id" value="gdal:warpreproject_1" type="QString"/>
+          <Option name="component_description" value="Recalé" type="QString"/>
+          <Option name="component_pos_x" value="718" type="double"/>
+          <Option name="component_pos_y" value="463" type="double"/>
+          <Option name="default_value" type="invalid"/>
+          <Option name="mandatory" value="false" type="bool"/>
+          <Option name="name" value="Recalé" type="QString"/>
+          <Option name="output_name" value="OUTPUT" type="QString"/>
+        </Option>
+      </Option>
+      <Option name="outputs_collapsed" value="true" type="bool"/>
+      <Option name="parameters_collapsed" value="true" type="bool"/>
+      <Option name="params" type="Map">
+        <Option name="DATA_TYPE" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="0" type="int"/>
+          </Option>
+        </Option>
+        <Option name="EXTRA" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="" type="QString"/>
+          </Option>
+        </Option>
+        <Option name="INPUT" type="List">
+          <Option type="Map">
+            <Option name="parameter_name" value="Rasterrecaler" type="QString"/>
+            <Option name="source" value="0" type="int"/>
+          </Option>
+        </Option>
+        <Option name="MULTITHREADING" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="false" type="bool"/>
+          </Option>
+        </Option>
+        <Option name="NODATA" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" type="invalid"/>
+          </Option>
+        </Option>
+        <Option name="OPTIONS" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="" type="QString"/>
+          </Option>
+        </Option>
+        <Option name="RESAMPLING" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="0" type="int"/>
+          </Option>
+        </Option>
+        <Option name="SOURCE_CRS" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" type="invalid"/>
+          </Option>
+        </Option>
+        <Option name="TARGET_CRS" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" type="invalid"/>
+          </Option>
+        </Option>
+        <Option name="TARGET_EXTENT" type="List">
+          <Option type="Map">
+            <Option name="parameter_name" value="Rastersource" type="QString"/>
+            <Option name="source" value="0" type="int"/>
+          </Option>
+        </Option>
+        <Option name="TARGET_EXTENT_CRS" type="List">
+          <Option type="Map">
+            <Option name="parameter_name" value="Rastersource" type="QString"/>
+            <Option name="source" value="0" type="int"/>
+          </Option>
+        </Option>
+        <Option name="TARGET_RESOLUTION" type="List">
+          <Option type="Map">
+            <Option name="parameter_name" value="rsolutionpixellaire" type="QString"/>
+            <Option name="source" value="0" type="int"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+  </Option>
+  <Option name="help"/>
+  <Option name="modelVariables"/>
+  <Option name="model_group" value="Boîte à outils raster" type="QString"/>
+  <Option name="model_name" value="Caler un raster sur une référence" type="QString"/>
+  <Option name="parameterDefinitions" type="Map">
+    <Option name="Rasterrecaler" type="Map">
+      <Option name="default" type="invalid"/>
+      <Option name="description" value="Raster à recaler" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="metadata"/>
+      <Option name="name" value="Rasterrecaler" type="QString"/>
+      <Option name="parameter_type" value="raster" type="QString"/>
+    </Option>
+    <Option name="Rastersource" type="Map">
+      <Option name="default" type="invalid"/>
+      <Option name="description" value="Raster source" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="metadata"/>
+      <Option name="name" value="Rastersource" type="QString"/>
+      <Option name="parameter_type" value="raster" type="QString"/>
+    </Option>
+    <Option name="gdal:warpreproject_1:Recalé" type="Map">
+      <Option name="create_by_default" value="true" type="bool"/>
+      <Option name="default" type="invalid"/>
+      <Option name="description" value="Recalé" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="metadata"/>
+      <Option name="name" value="gdal:warpreproject_1:Recalé" type="QString"/>
+      <Option name="parameter_type" value="rasterDestination" type="QString"/>
+      <Option name="supports_non_file_outputs" value="false" type="bool"/>
+    </Option>
+    <Option name="rsolutionpixellaire" type="Map">
+      <Option name="data_type" value="0" type="int"/>
+      <Option name="default" value="5" type="QString"/>
+      <Option name="description" value="Résolution" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="max" value="1.7976931348623157e+308" type="double"/>
+      <Option name="metadata"/>
+      <Option name="min" value="1" type="double"/>
+      <Option name="name" value="rsolutionpixellaire" type="QString"/>
+      <Option name="parameter_type" value="number" type="QString"/>
+    </Option>
+  </Option>
+  <Option name="parameters" type="Map">
+    <Option name="Rasterrecaler" type="Map">
+      <Option name="component_description" value="Rasterrecaler" type="QString"/>
+      <Option name="component_pos_x" value="242" type="double"/>
+      <Option name="component_pos_y" value="172" type="double"/>
+      <Option name="name" value="Rasterrecaler" type="QString"/>
+    </Option>
+    <Option name="Rastersource" type="Map">
+      <Option name="component_description" value="Rastersource" type="QString"/>
+      <Option name="component_pos_x" value="546" type="double"/>
+      <Option name="component_pos_y" value="170" type="double"/>
+      <Option name="name" value="Rastersource" type="QString"/>
+    </Option>
+    <Option name="rsolutionpixellaire" type="Map">
+      <Option name="component_description" value="rsolutionpixellaire" type="QString"/>
+      <Option name="component_pos_x" value="129" type="double"/>
+      <Option name="component_pos_y" value="338" type="double"/>
+      <Option name="name" value="rsolutionpixellaire" type="QString"/>
+    </Option>
+  </Option>
+</Option>

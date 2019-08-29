@@ -6,11 +6,10 @@ import processing
 class ProfilsDepuisLignes(QgsProcessingAlgorithm):
 
     def initAlgorithm(self, config=None):
-        self.addParameter(QgsProcessingParameterVectorLayer('lignes', 'Lignes', types=[QgsProcessing.TypeVectorLine]))
-        #self.addParameter(QgsProcessingParameterRasterLayer('mnt', 'MNT'))
+        self.addParameter(QgsProcessingParameterVectorLayer('lignes', 'Profils de validation', types=[QgsProcessing.TypeVectorLine]))
         self.addParameter(QgsProcessingParameterMultipleLayers('rasters', 'Rasters', layerType=QgsProcessing.TypeRaster))
-        self.addParameter(QgsProcessingParameterNumber('echantillons_nb', 'Nombre d\'Échantillons', type=QgsProcessingParameterNumber.Integer, minValue=1, maxValue=99, defaultValue=20))
-        self.addParameter(QgsProcessingParameterVectorDestination('OUTPUT', 'Profils'))
+        self.addParameter(QgsProcessingParameterNumber('echantillons_nb', 'Nombre d\'échantillons', type=QgsProcessingParameterNumber.Integer, minValue=1, maxValue=99, defaultValue=20))
+        self.addParameter(QgsProcessingParameterVectorDestination('OUTPUT', 'Profils discrétisés'))
 
     def processAlgorithm(self, parameters, context, model_feedback):
         # variables propres à Processing
@@ -78,10 +77,10 @@ class ProfilsDepuisLignes(QgsProcessingAlgorithm):
                 
 
     def name(self):
-        return 'Discrétiser des profils depuis des rasters'
+        return '2. Discrétiser les profils de validation'
 
     def displayName(self):
-        return 'Discrétiser des profils depuis des rasters'
+        return '2. Discrétiser les profils de validation'
 
     def group(self):
         return 'Boîte à outils validation'

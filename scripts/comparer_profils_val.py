@@ -9,7 +9,7 @@ from yattag import Doc, indent
 class ComparerProfils(QgsProcessingAlgorithm):
 
     def initAlgorithm(self, config=None):
-        self.addParameter(QgsProcessingParameterVectorLayer('profils', 'Profils', types=[QgsProcessing.TypeVectorPoint]))
+        self.addParameter(QgsProcessingParameterVectorLayer('profils', 'Profils discrétisés', types=[QgsProcessing.TypeVectorPoint]))
         self.addParameter(QgsProcessingParameterFileDestination('OUTPUT', 'Comparaison', 'HTML files (*.html)'))
 
     def processAlgorithm(self, parameters, context, model_feedback):
@@ -103,10 +103,10 @@ class ComparerProfils(QgsProcessingAlgorithm):
         return results
 
     def name(self):
-        return 'Comparer des profils échantillonnés'
+        return '3. Comparer les profils de validation discrétisés'
 
     def displayName(self):
-        return 'Comparer des profils échantillonnés'
+        return '3. Comparer les profils de validation discrétisés'
 
     def group(self):
         return 'Boîte à outils validation'

@@ -8,8 +8,8 @@ class InterpolerValeursProfils(QgsProcessingAlgorithm):
     def initAlgorithm(self, config=None):
         self.addParameter(QgsProcessingParameterVectorLayer('profils', 'Profils', types=[QgsProcessing.TypeVectorLine]))
         self.addParameter(QgsProcessingParameterRasterLayer('mnt', 'MNT'))
-        self.addParameter(QgsProcessingParameterNumber('echantillons_nb', 'Nombre d\'Échantillons', type=QgsProcessingParameterNumber.Integer, minValue=1, maxValue=99, defaultValue=20))
-        self.addParameter(QgsProcessingParameterVectorDestination('OUTPUT', 'Points'))
+        self.addParameter(QgsProcessingParameterNumber('echantillons_nb', 'Nombre d\'échantillons', type=QgsProcessingParameterNumber.Integer, minValue=1, maxValue=99, defaultValue=20))
+        self.addParameter(QgsProcessingParameterVectorDestination('OUTPUT', 'Nuage de points'))
 
     def processAlgorithm(self, parameters, context, model_feedback):
         # variables propres à Processing
@@ -27,10 +27,11 @@ class InterpolerValeursProfils(QgsProcessingAlgorithm):
         echantillons_nb = parameters['echantillons_nb'] # nombre d'échantillons
         profils_pt = [] # géométries des points
         profils_sp = [] # valeur des points
+        # les deux listes sont à deux dimension : chaque ligne correspond à un profil
 
         # traitement
         
-        # échantillonnage des points sur chaque profil
+        # discrétisation des points sur chaque profil
         for profil_f in profils.getFeatures():
             profil_g = profil_f.geometry()
             freq = profil_g.length()/(echantillons_nb-1)
@@ -38,6 +39,7 @@ class InterpolerValeursProfils(QgsProcessingAlgorithm):
             for i in range(1, echantillons_nb-1):
                 echantillons_g.append(profil_g.interpolate(freq*i))
             echantillons_g.append(QgsGeometry().fromPointXY(profil_g.asMultiPolyline()[0][-1]))
+            # note pour ci-dessus : l'interpolation des premiers et derniers points sur une ligne peut parfois planter, on les place à la main pour lever le risque
             profils_pt.append(echantillons_g)
             elevations = []
             for echantillon_g in echantillons_g:                
@@ -45,12 +47,14 @@ class InterpolerValeursProfils(QgsProcessingAlgorithm):
                 elevations.append(elevation)
             profils_sp.append(elevations)
 
-        # calcul des valeurs des points entre le premier et le dernier profil
+        # interpolation linéaire : calcul des valeurs des points entre le premier et le dernier profil de point à point
         steps = []
         nb_profils = len(profils_sp)
         for i in range(0, echantillons_nb):
+            # on récupère la valeur du point sur le premier et le dernier profil
             v1 = profils_sp[0][i]
             v2 = profils_sp[-1][i]
+            # on détermine le pas de l'interpolation
             steps.append((v2-v1)/nb_profils)
         for i in range(1,nb_profils-1):
             for j in range(0, echantillons_nb):

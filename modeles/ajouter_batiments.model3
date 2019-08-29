@@ -44,14 +44,14 @@
       <Option name="dependencies"/>
       <Option name="id" value="gdal:rastercalculator_1" type="QString"/>
       <Option name="outputs" type="Map">
-        <Option name="MNT + BATIMENTS" type="Map">
+        <Option name="MNT+batiments" type="Map">
           <Option name="child_id" value="gdal:rastercalculator_1" type="QString"/>
-          <Option name="component_description" value="MNT + BATIMENTS" type="QString"/>
+          <Option name="component_description" value="MNT+batiments" type="QString"/>
           <Option name="component_pos_x" value="640" type="double"/>
           <Option name="component_pos_y" value="1499" type="double"/>
           <Option name="default_value" type="invalid"/>
           <Option name="mandatory" value="false" type="bool"/>
-          <Option name="name" value="MNT + BATIMENTS" type="QString"/>
+          <Option name="name" value="MNT+batiments" type="QString"/>
           <Option name="output_name" value="OUTPUT" type="QString"/>
         </Option>
       </Option>
@@ -92,12 +92,6 @@
           <Option type="Map">
             <Option name="source" value="2" type="int"/>
             <Option name="static_value" type="invalid"/>
-          </Option>
-        </Option>
-        <Option name="EXTRA" type="List">
-          <Option type="Map">
-            <Option name="source" value="2" type="int"/>
-            <Option name="static_value" value="" type="QString"/>
           </Option>
         </Option>
         <Option name="FORMULA" type="List">
@@ -683,19 +677,19 @@
       <Option name="name" value="btiments" type="QString"/>
       <Option name="parameter_type" value="vector" type="QString"/>
     </Option>
-    <Option name="gdal:rastercalculator_1:MNT + BATIMENTS" type="Map">
+    <Option name="gdal:rastercalculator_1:MNT+batiments" type="Map">
       <Option name="create_by_default" value="true" type="bool"/>
       <Option name="default" type="invalid"/>
-      <Option name="description" value="MNT + BATIMENTS" type="QString"/>
+      <Option name="description" value="MNT+batiments" type="QString"/>
       <Option name="flags" value="0" type="int"/>
       <Option name="metadata"/>
-      <Option name="name" value="gdal:rastercalculator_1:MNT + BATIMENTS" type="QString"/>
+      <Option name="name" value="gdal:rastercalculator_1:MNT+batiments" type="QString"/>
       <Option name="parameter_type" value="rasterDestination" type="QString"/>
       <Option name="supports_non_file_outputs" value="false" type="bool"/>
     </Option>
     <Option name="rsolutiondumnt" type="Map">
       <Option name="data_type" value="1" type="int"/>
-      <Option name="default" value="0" type="QString"/>
+      <Option name="default" value="5" type="QString"/>
       <Option name="description" value="Résolution du MNT" type="QString"/>
       <Option name="flags" value="0" type="int"/>
       <Option name="max" value="1.7976931348623157e+308" type="double"/>
